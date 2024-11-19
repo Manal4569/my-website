@@ -1,0 +1,490 @@
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>
+   StyleMe - Smart AI Wardrobe
+  </title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&amp;display=swap" rel="stylesheet"/>
+<style>
+   body {
+            background: linear-gradient(to bottom, #6a5acd, #2d2d2d);
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #f5e1dc;
+            overflow-x: hidden;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: url('DALL·E 2024-11-11.jpg') no-repeat center center;
+        background-size: cover;
+        height: 100vh;
+        color: #f5e1dc;
+        }
+        .header-content {
+            position: relative;
+            z-index: 1; 
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        
+        }
+        .title {
+            font-size: 36px;
+            margin: 10px 0;
+            letter-spacing: 2px;
+        }
+        .subtitle {
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+        .quote {
+            font-size: 16px;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background: linear-gradient(to right, #6a5acd, #2d2d2d);
+            padding: 10px 0;
+        }
+        .navbar a {
+            color: #f5e1dc;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 16px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease-in-out;
+        }
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .section h2 {
+            font-size: 24px;
+            color: #f5e1dc;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #6a5acd, #2d2d2d);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .section p {
+            font-size: 16px;
+            color: #f5e1dc;
+            line-height: 1.5;
+        }
+        .pricing {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .pricing .plan {
+            background: linear-gradient(to right, #6a5acd, #2d2d2d);
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .pricing .plan h3 {
+            font-size: 20px;
+            color: #f5e1dc;
+            margin-bottom: 10px;
+        }
+        .pricing .plan p {
+            font-size: 16px;
+            color: #f5e1dc;
+            margin-bottom: 20px;
+        }
+        .pricing .plan .price {
+            font-size: 24px;
+            color: #f5e1dc;
+            margin-bottom: 20px;
+        }
+        .contact {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .contact a {
+            font-size: 16px;
+            color: #6a5acd;
+            text-decoration: none;
+            border: 1px solid #6a5acd;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #f5e1dc;
+        }
+        .app-overview {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 40px;
+        }
+        .app-overview .feature {
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .app-overview .feature img {
+            width: 80%;
+            border-radius: 10px;
+        }
+        .app-overview .feature h3 {
+            font-size: 20px;
+            color: #f5e1dc;
+            margin-top: 10px;
+        }
+        .app-overview .feature p {
+            font-size: 16px;
+            color: #f5e1dc;
+        }
+        .wardrobe {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        .wardrobe img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+        }
+        .chatbox {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background-color: #6a5acd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            color: #f5e1dc;
+            display: none;
+        }
+        .chatbox-header {
+            background-color: #2d2d2d;
+            padding: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            text-align: center;
+        }
+        .chatbox-body {
+            padding: 10px;
+            height: 200px;
+            overflow-y: auto;
+        }
+        .chatbox-footer {
+            padding: 10px;
+            border-top: 1px solid #2d2d2d;
+        }
+        .chatbox-footer input {
+            width: 80%;
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+        }
+        .chatbox-footer button {
+            width: 15%;
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #2d2d2d;
+            color: #f5e1dc;
+        }
+        .chatbox-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #6a5acd;
+            color: #f5e1dc;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+  </style>
+</head>
+<body>
+<div class="header">
+<div class="header-content">
+<div class="title" style='font-family: "Orbitron", sans-serif; font-size: 48px;'>
+     STYLEME
+    </div>
+<div class="subtitle">
+     SMART AI WARDROBE
+    </div>
+<div class="quote">
+     "Your personal AI stylist at your fingertips"
+    </div>
+</div>
+</div>
+<div class="navbar">
+<a href="#about">
+    About
+   </a>
+<a href="#how-it-works">
+    How It Works
+   </a>
+<a href="#app-overview">
+    App Overview
+   </a>
+<a href="#pricing">
+    Pricing
+   </a>
+<a href="#contact">
+    Contact
+   </a>
+</div>
+<div class="content">
+<div class="section" id="about">
+<h2>
+     About StyleMe AI
+    </h2>
+<div class="wardrobe">
+<img alt="AI-Powered Wardrobe" height="300" src="DALL·E 2024-11-10 02.17.25 - A futuristic AI-powered wardrobe in a modern bedroom, featuring sleek design with touch-screen panels on wardrobe doors displaying clothing suggestion.webp" style="width: 400px; height: auto;" width="300"/>
+</div>
+<p>
+     Our Smart AI Wardrobe is a revolutionary product that scans your clothes and your body, asks you a couple of questions, and matches your outfit for whatever reasons you want to go out. It reduces hassle with smart technology and is connected to an app that provides an overview of your wardrobe. The app also acts as an AI stylist, helping you style your clothes by allowing you to take pictures of your clothes and upload them.
+    </p>
+</div>
+<div class="section" id="how-it-works">
+<h2>
+     How It Works
+    </h2>
+<div class="app-overview">
+<div class="feature">
+<img alt="Scanning Clothes" height="300" src="https://storage.googleapis.com/a1aa/image/SCCQfbt1kB17bKytdzZnoMUecAJf0fnckWIWWsDUmEOHBHIPB.jpg" width="300"/>
+<h3>
+       Scan Your Clothes
+      </h3>
+<p>
+       Use the smart wardrobe to scan your clothes and get them digitized.
+      </p>
+</div>
+<div class="feature">
+<img alt="Uploading Clothes" height="300" src="https://storage.googleapis.com/a1aa/image/1zVR26wfdc1ncqHegI8O6Rz4G4ZA1vpaYfdg5c3wU0R1gDknA.jpg" width="300"/>
+<h3>
+       Upload Your Clothes
+      </h3>
+<p>
+       Take pictures of your clothes and upload them to the app for styling suggestions.
+      </p>
+</div>
+<div class="feature">
+<img alt="AI Outfit Suggestions" height="300" src="https://storage.googleapis.com/a1aa/image/2cuygOaYEkZWCxtKHsCpiBs6NpeeEB66rHqel6c7BplygDknA.jpg" width="300"/>
+<h3>
+       AI Outfit Suggestions
+      </h3>
+<p>
+       Get outfit suggestions based on your preferences and the occasion.
+      </p>
+</div>
+</div>
+</div>
+<div class="section" id="app-overview">
+<h2>
+     App Overview
+    </h2>
+<div class="app-overview">
+<div class="feature" onclick="window.location.href='app-overview.html#wardrobe-overview'">
+<img alt="Wardrobe Overview" height="300" src="https://storage.googleapis.com/a1aa/image/hDF7Pp4amj5pD5HHfTeQYTbFYHL78WcKXmyiyeTAhmDUfsHPB.jpg" width="300"/>
+<h3>
+       Wardrobe Overview
+      </h3>
+<p>
+       Get a complete overview of your wardrobe and manage your clothes easily.
+      </p>
+</div>
+<div class="feature" onclick="window.location.href='app-overview.html#ai-stylist'">
+<img alt="AI Stylist" height="300" src="https://storage.googleapis.com/a1aa/image/xcJHTDO6MlZ9C5wEGwihfDde5cTQyLfTKis71pKSjZgRfsHPB.jpg" width="300"/>
+<h3>
+       AI Stylist
+      </h3>
+<p>
+       Let the AI stylist help you choose the perfect outfit for any occasion.
+      </p>
+</div>
+<div class="feature" onclick="window.location.href='app-overview.html#app-wardrobe-connection'">
+<img alt="App and Wardrobe Connection" height="300" src="https://storage.googleapis.com/a1aa/image/jFh3ZxLfzEXQZqUIVsidwJLtiBYorQTaofqpPBARGNdyFCyTA.jpg" width="300"/>
+<h3>
+       App and Wardrobe Connection
+      </h3>
+<p>
+       Seamlessly connect your physical wardrobe with the StyleMe app.
+      </p>
+</div>
+</div>
+<div class="app-overview">
+<div class="feature">
+<img alt="Screenshot of the app showing wardrobe overview" height="600" src="https://storage.googleapis.com/a1aa/image/HZTKBhtyALopLREHjqOrP4car9AeZCUhLeIddXg0clgtqByTA.jpg" width="300"/>
+</div>
+<div class="feature">
+<img alt="Screenshot of the app showing AI stylist suggestions" height="600" src="https://storage.googleapis.com/a1aa/image/feydlWwl5amW2kQYF4wudTvdYEjONpIe89OzivBV5Q3mVDknA.jpg" width="300"/>
+</div>
+<div class="feature">
+<img alt="Screenshot of the app showing clothes upload feature" height="600" src="https://storage.googleapis.com/a1aa/image/Cvix7pogOdIrEBnCan3HKEo5pMMhfEyWOTY15ZnVoUXa1A5JA.jpg" width="300"/>
+</div>
+<div class="feature">
+<img alt="Screenshot of the app showing an individual with suggested outfit" height="600" src="https://storage.googleapis.com/a1aa/image/KAJeRzB9rHTpAiYj4vjHrvofYjuytrWi9n8qoBMEu8zbwByTA.jpg" width="300"/>
+</div>
+</div>
+</div>
+<div class="section" id="pricing">
+<h2>
+     Pricing
+    </h2>
+<div class="pricing">
+<div class="plan">
+<h3>
+       Basic Plan
+      </h3>
+<p>
+       Access to basic features of the app
+      </p>
+<div class="price">
+       £9.99/month
+      </div>
+</div>
+<div class="plan">
+<h3>
+       Premium Plan
+      </h3>
+<p>
+       Access to all features of the app
+      </p>
+<div class="price">
+       £19.99/month
+      </div>
+</div>
+<div class="plan">
+<h3>
+       Custom Physical Wardrobe
+      </h3>
+<p>
+       Contact our sales team for a custom physical wardrobe
+      </p>
+<div class="price">
+       Contact for pricing
+      </div>
+</div>
+</div>
+</div>
+<div class="section" id="contact">
+<h2>
+     Contact Us
+    </h2>
+<p>
+     For purchasing the custom physical wardrobe, please contact our sales team.
+    </p>
+<div class="contact">
+<a href="mailto:sales@styleme.com">
+      Contact Sales Team
+     </a>
+</div>
+<div class="contact">
+<h3>
+      FAQ &amp; Help
+     </h3>
+<p>
+      For any questions or help, please visit our
+      <a href="#">
+       FAQ
+      </a>
+      page or contact our support team.
+     </p>
+</div>
+<div class="contact">
+<h3>
+      Follow Us
+     </h3>
+<p>
+      Stay connected with us on social media:
+     </p>
+<div class="social-media" style="margin-top: 10px; margin-bottom: 20px;">
+<a href="https://facebook.com" target="_blank">
+<i class="fab fa-facebook-f">
+</i>
+</a>
+<a href="https://twitter.com" target="_blank">
+<i class="fab fa-twitter">
+</i>
+</a>
+<a href="https://instagram.com" target="_blank">
+<i class="fab fa-instagram">
+</i>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="chatbox" id="chatbox">
+<div class="chatbox-header">
+<h3>
+     Chat with Us
+    </h3>
+</div>
+<div class="chatbox-body">
+<p>
+     Hi! How can we help you today?
+    </p>
+</div>
+<div class="chatbox-footer">
+<input placeholder="Type a message..." type="text"/>
+<button>
+<i class="fas fa-paper-plane">
+</i>
+</button>
+</div>
+</div>
+<button class="chatbox-toggle" onclick="toggleChatbox()">
+<i class="fas fa-comments">
+</i>
+</button>
+<script>
+   function toggleChatbox() {
+            var chatbox = document.getElementById('chatbox');
+            if (chatbox.style.display === 'none' || chatbox.style.display === '') {
+                chatbox.style.display = 'block';
+            } else {
+                chatbox.style.display = 'none';
+            }
+        }
+
+        window.addEventListener('scroll', function() {
+            var sections = document.querySelectorAll('.section');
+            sections.forEach(function(section) {
+                var rect = section.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom >= 0) {
+                    section.classList.add('visible');
+                }
+            });
+        });
+  </script>
+</body>
+</html>
