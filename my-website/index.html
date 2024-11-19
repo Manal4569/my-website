@@ -20,7 +20,7 @@
         .header {
             text-align: center;
             padding: 20px;
-            background: url('bg-image.webp') no-repeat center center;
+            background: url('bg-image.webp') no-repeat center center; background-size: cover; height: 70vh;
         background-size: cover;
         height: 100vh;
         color: #f5e1dc;
@@ -29,7 +29,7 @@
             position: relative;
             z-index: 1; 
         }
-        .header::before {
+        .header::before { background: rgba(0, 0, 0, 0.5);
             content: '';
             position: absolute;
             top: 0;
