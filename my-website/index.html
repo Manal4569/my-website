@@ -229,7 +229,59 @@
             cursor: pointer;
         }
   </style>
-</head>
+<style>
+    .header-content {
+        position: relative;
+        top: 30%; /* Push content lower */
+        text-align: center;
+        z-index: 1;
+    }
+    .header-content .title {
+        font-size: 48px;
+        font-weight: bold;
+        color: #f5e1dc;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Add shadow for better readability */
+    }
+    .header-content .subtitle, .header-content .quote {
+        color: #f5e1dc;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    }
+    </style><style>
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header-content .title {
+    font-family: 'Orbitron', sans-serif; /* Futuristic font */
+    font-size: 56px;
+    font-weight: bold;
+    color: #f5e1dc;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
+    animation: fadeInDown 1s ease-out;
+}
+
+.header-content .subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    color: #f5e1dc;
+    animation: fadeInDown 1.5s ease-out;
+}
+
+.header-content .quote {
+    font-family: 'Montserrat', italic;
+    font-size: 18px;
+    color: #f5e1dc;
+    margin-top: 10px;
+    animation: fadeInDown 2s ease-out;
+}
+</style></head>
 <body>
 <div class="header">
 <div class="header-content">
